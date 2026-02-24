@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric London | Shorts Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/en/2/23/Fabric_Logo.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #ffffff; }
+        .fabric-text { letter-spacing: -0.05em; font-weight: 800; }
+        .video-card { opacity: 0; transform: translateY(20px); transition: all 0.4s ease; cursor: pointer; }
+        .video-card.visible { opacity: 1; transform: translateY(0); }
+        .filter-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .filter-btn.active { background-color: white; color: black; border-color: white; }
+        .thumbnail-container::after { 
+            content: 'PLAY ON YOUTUBE'; 
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.4); color: white; font-size: 10px; font-weight: bold;
+            opacity: 0; transition: opacity 0.2s; letter-spacing: 0.1em;
+        }
+        .video-card:hover .thumbnail-container::after { opacity: 1; }
+        .video-card:hover img { transform: scale(1.05); }
+        img { transition: all 0.5s ease; filter: grayscale(0%); }
+        .video-card:hover img { filter: grayscale(100%); }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-white selection:text-black">
+
+    <header class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 py-8 px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+                <div class="flex-1 w-full">
+                    <img src="https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/445441841_418225117765067_7457157601594791216_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QHYdQb-XP6CELmgVYgxcOnAxyq_uJjNK351tpwDxZ1pOAQfIXmtoHhxMS8lbHhwj1F4n2Kgf60zfz19pB1a2G7v&_nc_ohc=-xvGGmErNksQ7kNvwGJROj4&_nc_gid=xrvSOq1fQqjVGj4PIKKOHA&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_Afs6b4EOzvwWsQNlade38B38iNUQbJEWvVsrArdJv3WvGg&oe=69A40B33&_nc_sid=7a9f4b" class="w-16 h-16 rounded-full mb-4 border border-white/20" alt="thisismusic logo">
+                    <h1 class="fabric-text text-6xl tracking-tighter leading-none mb-6 uppercase">FABRICLIVE REVIEWS BY @THISISMUSIC.REWIND</h1>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="setFilter('all')" id="filter-all" class="filter-btn active text-[10px] font-bold border border-white/20 px-6 py-2.5 hover:border-white uppercase tracking-widest">ALL ARCHIVE</button>
+                        <button onclick="setFilter('series')" id="filter-series" class="filter-btn text-[10px] font-bold border border-white/20 px-6 py-2.5 hover:border-white uppercase tracking-widest">INDIVIDUAL ENTRIES</button>
+                        <button onclick="setFilter('top10')" id="filter-top10" class="filter-btn text-[10px] font-bold border border-white/20 px-6 py-2.5 hover:border-white uppercase tracking-widest">TOP 10S AFTER EACH 10</button>
+                        <button onclick="setFilter('final')" id="filter-final" class="filter-btn text-[10px] font-bold border border-white/20 px-6 py-2.5 hover:border-white uppercase tracking-widest">FINAL RANKINGS</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end gap-4 w-full md:w-auto">
+
+                <div class="flex items-center gap-4 mb-4 md:mb-0">
+                    <a href="https://www.instagram.com/thisismusic.rewind/" target="_blank" class="text-white/40 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="https://open.spotify.com/playlist/1YFV72r3qx8ArVYHx1Cek9?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="text-white/40 hover:text-white transition-colors"><i data-lucide="music" class="w-5 h-5"></i></a>
+                    <a href="https://www.tiktok.com/@thisismusic.rewind" target="_blank" class="text-white/40 hover:text-white transition-colors"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.59-1.01V14.5c.01 2.32-.6 4.77-2.31 6.35-1.74 1.61-4.39 2.19-6.64 1.72-2.25-.47-4.29-2.12-5.16-4.3-.88-2.17-.61-4.85.83-6.76 1.41-1.85 3.8-2.86 6.09-2.52v4.01c-1.24-.14-2.52.23-3.38 1.14-.85.91-1.02 2.36-.44 3.44.58 1.08 1.84 1.71 3.06 1.57 1.22-.14 2.22-1.21 2.23-2.44V.02z"/></svg></a>
+                    <a href="https://www.youtube.com/@thisismusic.rewind" target="_blank" class="text-white/40 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                </div>
+
+                    <div class="relative w-full md:w-72">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30"></i>
+                        <input type="text" id="search-input" placeholder="SEARCH TITLES..." class="w-full bg-white/5 border border-white/10 py-2.5 pl-10 pr-4 text-[10px] font-mono focus:outline-none focus:border-white/40 uppercase tracking-widest transition-colors">
+                    </div>
+                    
+                    <div class="relative w-full md:w-32">
+                        <select id="items-per-page" onchange="updateItemsPerPage(this.value)" class="w-full bg-white/5 border border-white/10 py-2.5 px-3 text-[10px] font-mono focus:outline-none focus:border-white/40 uppercase tracking-widest appearance-none cursor-pointer">
+                            <option value="10" class="bg-black">SHOW 10</option>
+                            <option value="20" class="bg-black">SHOW 20</option>
+                            <option value="50" selected class="bg-black">SHOW 50</option>
+                            <option value="all" class="bg-black">SHOW ALL</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-white/30 pointer-events-none"></i>
+                    </div>
+
+                    <p id="total-count" class="text-[10px] font-bold bg-white text-black px-2 py-1 tracking-widest uppercase">0 ENTRIES</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-8 py-16">
+        <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16">
+            <!-- Videos injected here -->
+        </div>
+
+        <div id="pagination-controls" class="mt-24 flex justify-center items-center gap-12 border-t border-white/10 pt-12">
+            <button onclick="prevPage()" id="prev-btn" class="group flex items-center gap-2 text-white/40 hover:text-white disabled:opacity-0 transition-all">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold tracking-widest uppercase">PREV</span>
+            </button>
+            <span id="page-info" class="text-[11px] font-mono tracking-[0.2em] text-white/60 uppercase">PAGE 1 / 1</span>
+            <button onclick="nextPage()" id="next-btn" class="group flex items-center gap-2 text-white/40 hover:text-white disabled:opacity-0 transition-all">
+                <span class="text-[10px] font-bold tracking-widest uppercase">NEXT</span>
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </main>
+
+    <footer class="max-w-7xl mx-auto px-8 py-12 border-t border-white/10 text-center">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-white/40">
+            Site vibecoded by <a href="https://www.youtube.com/@JeremyForTheWin" target="_blank" class="text-white/60 hover:text-white transition-colors underline decoration-white/20 underline-offset-4">JeremyForTheWin</a>
+        </p>
+    </footer>
+
+
+    <script>
+        const videoData = [{"id": "Qtq-LGl6I9I", "title": "Fabriclive 01 - James Lavelle. #djculture #djmix #compilationalbum #breakbeat #cdcollection #dj", "date": "2025-08-20", "num": 1, "type": "series", "header": "01: James Lavelle"}, {"id": "zK47ZhEL0oo", "title": "Fabriclive Ali B. #compilationalbum #clubbing #fabriclive #djculture #2000smusic #dancemusic #djmix", "date": "2025-08-21", "num": 2, "type": "series", "header": "02: Ali B"}, {"id": "vFdSjDtSAAQ", "title": "fabric live 03 - DJ Hype. #clubbing #djculture #dj #compilationalbum #djmix #cdcollection", "date": "2025-08-22", "num": 3, "type": "series", "header": "03: DJ Hype"}, {"id": "Co-Z8K6OfyM", "title": "Fabriclive 04 -- Deadly Avenger. #eastcoast #hiphop #djmix #breaksmusic #fabriclive #cdcollection", "date": "2025-08-23", "num": 4, "type": "series", "header": "04: Deadly Avenger"}, {"id": "dhN49zfieNg", "title": "fabriclive 05 - Howie B. #djculture #dj #cdcollection #cdcollection #electronicmusic #2000smusic", "date": "2025-08-24", "num": 5, "type": "series", "header": "05: Howie B"}, {"id": "qNiejZuW60o", "title": "Fabriclive 06 - Grooverider. #drumandbass #100dayschallenge #musicreview #electronicmusic #djmix", "date": "2025-08-25", "num": 6, "type": "series", "header": "06: Grooverider"}, {"id": "MaiNGDPvcbA", "title": "Fabriclive 07 - John Peel. #johnpeel #djculture #dj #djmix #cdcollection #electronicmusic #djmix", "date": "2025-08-26", "num": 7, "type": "series", "header": "07: John Peel"}, {"id": "ToV8AAj_Xkk", "title": "Fabriclive 08 - Plump DJs. #breakbeat #clubbing #musicreview #djculture #dancemusic #dj #fabriclive", "date": "2025-08-27", "num": 8, "type": "series", "header": "08: Plump DJs"}, {"id": "74fMggPx_R0", "title": "Fabriclive 09 - Jacques Lu Cont. #nightclub #musicreview #cdcollection #djculture #mixtape #dj", "date": "2025-08-28", "num": 9, "type": "series", "header": "09: Jacques Lu Cont"}, {"id": "C2NDhlbQuXs", "title": "Fabric live 11 - Bent. #djculture #100dayschallenge #musicreview #cdcollection #fabriclive #djmusic", "date": "2025-08-31", "num": 11, "type": "series", "header": "11: Bent"}, {"id": "6tFS3HyC1V0", "title": "Fabric Live 12 - Bugz in the Attic. #bruk #brokenbeat #albumreview #cdcollector #djmix #dancemusic", "date": "2025-08-31", "num": 12, "type": "series", "header": "12: Bugz in the Attic"}, {"id": "bDWkQM1H4so", "title": "Fabric live 13 - J Majik. #dnb #drumandbass #djmix #djculture #cdcollection #dj #musicreview #music", "date": "2025-09-01", "num": 13, "type": "series", "header": "13: J Majik"}, {"id": "Zx-0ln9NQrg", "title": "Fabriclive 14 - DJ Spinbad. #turntablism #hiphopheads #rap #mixtape #djculture #djmix #dj #goldenera", "date": "2025-09-02", "num": 14, "type": "series", "header": "14: DJ Spinbad"}, {"id": "_Nq1K2tvtyA", "title": "Fabric live 15 - Nitin Sawhney. #worldmusic #globalgrooves #recordcollection #musicreview #djculture", "date": "2025-09-03", "num": 15, "type": "series", "header": "15: Nitin Sawhney"}, {"id": "YVkeashXTAU", "title": "Fabriclive 16 - Adam Freeland. #djmix #fyp #dancemusic #breakbeat #raveculture #clubbing #djculture", "date": "2025-09-04", "num": 16, "type": "series", "header": "16: Adam Freeland"}, {"id": "f0aPOtoSdqA", "title": "Fabric Live 17 - AIM. #djculture #ukhiphop #triphop #musichistory #djmix #vinyl #musicculture #dj", "date": "2025-09-05", "num": 17, "type": "series", "header": "17: AIM"}, {"id": "YZO3ZfJjqiI", "title": "Fabriclive 18 - Andy C & DJ Hype. #drumandbass #dnb #djmix #nowplaying #djculture #raveculture", "date": "2025-09-06", "num": 18, "type": "series", "header": "18: Andy C & DJ Hype"}, {"id": "KOjL5Li9VH0", "title": "Fabriclive 19- The Freestylers.  #breakbeat #djculture #2000s #dancemusicculture #djmix #musicreview", "date": "2025-09-07", "num": 19, "type": "series", "header": "19: Freestylers"}, {"id": "1lBIYwx6P5A", "title": "Fabriclive 20 - Joe Ransom. #hiphop #breakbeat #djculture #djmix #electronicmusic #clubbing #2000s", "date": "2025-09-08", "num": 20, "type": "series", "header": "20: Joe Ransom"}, {"id": "QpoWPheDsnE", "title": "Fabriclive 21 - Meat Katie. #breakbeat #djculture #electronicmusic #djmix #clubbing #londonmusic", "date": "2025-09-09", "num": 21, "type": "series", "header": "21: Meat Katie"}, {"id": "ikJkskc4uX0", "title": "Fabriclive 22 - Scratch Perverts. #turntablism #dmc #djculture #djmix #electronicmusic #dnb", "date": "2025-09-11", "num": 22, "type": "series", "header": "22: Scratch Perverts"}, {"id": "r4i-ui5CldI", "title": "Fabriclive 23 - Death in vegas. #djculture #cdcollector #djmix #2000sthrowback #detroittechno", "date": "2025-09-11", "num": 23, "type": "series", "header": "23: Death in Vegas"}, {"id": "HtQLIkS2qaA", "title": "Fabriclive 24 - Diplo. #djculture #djset #djmix #londonmusic #diplo #cdcollection #musicreview", "date": "2025-09-12", "num": 24, "type": "series", "header": "24: Diplo"}, {"id": "_DNCG744-6s", "title": "Fabriclive 25 - High Contrast.  #drumandbass #djmix #djset #electronicmusic #musicculture #review", "date": "2025-09-13", "num": 25, "type": "series", "header": "25: High Contrast"}, {"id": "zGgeTmpJ1z0", "title": "Fabric live 26. The Herbaliser. #djculture #sampling #breaks #nostalgia #2000smusic #djset #djmix", "date": "2025-09-14", "num": 26, "type": "series", "header": "26: The Herbaliser"}, {"id": "SeLSgj-NGRw", "title": "Fabriclive 27 - DJ Format. #recorddigging #recordcollection #soulmusic #djculture #djmix #cds", "date": "2025-09-15", "num": 27, "type": "series", "header": "27: DJ Format"}, {"id": "Pe_ZgnewYvY", "title": "fabriclive 28 Evil Nine. #djculture #breakbeat #2000s #clubbing #cdcollection #londonmusic", "date": "2025-09-16", "num": 28, "type": "series", "header": "28: Evil Nine"}, {"id": "1zxFHXnZmtA", "title": "fabriclive 29 - Cut Copy. #electro #djmix #djculture #cdcollection #australianmusic #dancemusic", "date": "2025-09-17", "num": 29, "type": "series", "header": "29: Cut Copy"}, {"id": "1oPI8nkqfSc", "title": "Fabriclive 30 - Stanton Warriors. #stantonwarriors #djculture #electronicmusic #djset #cdcollection", "date": "2025-09-18", "num": 30, "type": "series", "header": "30: Stanton Warriors"}, {"id": "O268iLMtDps", "title": "Fabriclive 31 - The Glimmers. #dancemusicculture #clubbing #electro #djculture #indieelectro", "date": "2025-09-19", "num": 31, "type": "series", "header": "31: The Glimmers"}, {"id": "raSo2mEr8xw", "title": "Fabriclive 32 - Tayo. #dubstep #grime #londonmusic #bassmusic #breakbeat", "date": "2025-09-20", "num": 32, "type": "series", "header": "32: Tayo"}, {"id": "53ko-86zQjc", "title": "Fabriclive 33 - Spank Rock. #dancemusic #mixtape #djmix #djculture #rap #100dayschallenge", "date": "2025-09-21", "num": 33, "type": "series", "header": "33: Spank Rock"}, {"id": "ieKwmjjeqbE", "title": "Fabriclive 34 - Krafty Kuts. #turntablism #djculture #breakbeat #electronicmusic", "date": "2025-09-22", "num": 34, "type": "series", "header": "34: Krafty Kuts"}, {"id": "UiKkLdUb0Dg", "title": "fabriclive 35 - Marcus Intalex. #dnbcommunity #dnb #drumandbass #liquiddnb #djculture", "date": "2025-09-23", "num": 35, "type": "series", "header": "35: Marcus Intalex"}, {"id": "DyLzHV2k0ms", "title": "FabricLive 36 \u2013 James Murphy & Pat Mahoney | Disco meets electro chaos #FabricLive #discohouse", "date": "2025-09-24", "num": 36, "type": "series", "header": "36: James Murphy & Pat Mahoney"}, {"id": "-kpcKsipVeQ", "title": "FabricLive 37 \u2013 Caspa & Rusko | Dubstep\u2019s big bang moment #FabricLive #Dubstep", "date": "2025-09-25", "num": 37, "type": "series", "header": "37: Caspa & Rusko"}, {"id": "UkkFTKtz9qo", "title": "DJ Craze brings Miami bass & hip-hop heat, sharp skills but not my vibe. #FabricLive38 #DJCraze", "date": "2025-09-26", "num": 38, "type": "series", "header": "38: DJ Craze"}, {"id": "UxUggAkr3_4", "title": "DJ Yoda\u2019s FabricLive 39: Hip-hop, turntablism & chaos. Jurassic 5 \u2192 Hot 8 Brass \u2192 Adam F #DJYoda", "date": "2025-09-27", "num": 39, "type": "series", "header": "39: DJ Yoda"}, {"id": "wNIDFuWSafE", "title": "FabricLive 40: Noisia. A dark, precision-engineered DnB masterclass. #FabricLive #Noisia #DnB", "date": "2025-09-28", "num": 40, "type": "series", "header": "40: Noisia"}, {"id": "iuTPyaVjwlY", "title": "FabricLive 41: Simian Mobile Disco. Neon chaos bottled. Bloghouse at its wildest. #FabricLive", "date": "2025-09-29", "num": 41, "type": "series", "header": "41: Simian Mobile Disco"}, {"id": "cQ7UCOy-X_s", "title": "Freq Nasty drops chaos & bass in FabricLive 42. Not for the faint-hearted! #FabricLive #FreqNasty", "date": "2025-09-30", "num": 42, "type": "series", "header": "42: Freq Nasty"}, {"id": "fdCYBDfhNzA", "title": "Sinden\u2019s FabricLive 43 \u2014 fidget house chaos & smooth landings. #FabricLive #Sinden", "date": "2025-10-01", "num": 43, "type": "series", "header": "43: Sinden"}, {"id": "r1mk8IQOxGU", "title": "Commix show DnB\u2019s soul & steel. FabricLive 44 = safe hands. #FabricLive #Commix #dnb", "date": "2025-10-02", "num": 44, "type": "series", "header": "44: Commix"}, {"id": "cOL36CIndCI", "title": "A-Trak\u2019s FabricLive 45 mix: high-energy house chaos. Drinks, layers, pure party fuel!", "date": "2025-10-03", "num": 45, "type": "series", "header": "45: A-Trak"}, {"id": "gtcnWgvby8U", "title": "FabricLive 46 \u2014 LTJ Bukem | Liquid drum & bass perfection", "date": "2025-10-04", "num": 46, "type": "series", "header": "46: LTJ Bukem"}, {"id": "pBfv9G8sqlU", "title": "FabricLive 47 \u2013 Toddla T. Sheffield bass chaos. #FabricLive #ToddlaT", "date": "2025-10-05", "num": 47, "type": "series", "header": "47: Toddla T"}, {"id": "imH0nCeCiqM", "title": "FabricLive 48 \u2013 Filthy Dukes. Neon electro-indie chaos. #FabricLive #ElectroClash", "date": "2025-10-06", "num": 48, "type": "series", "header": "48: Filthy Dukes"}, {"id": "cQCdesBI-i8", "title": "FabricLive 49 \u2013 Buraka Som Sistema: Kuduro meets techno in Lisbon\u2019s underground. #FabricLive49", "date": "2025-10-07", "num": 49, "type": "series", "header": "49: Buraka Som Sistema"}, {"id": "qYc-Geua0LQ", "title": "FabricLive 50 \u2013 dBridge & Instra:mental: minimal DnB, moody and futuristic. #FabricLive50", "date": "2025-10-08", "num": 50, "type": "series", "header": "50: dBridge & Instra:mental"}, {"id": "nXy7PDgJwE4", "title": "FabricLive 51 \u2013 Duke Dumont: deep, hypnotic, and ahead of its time. #FabricLive51", "date": "2025-10-09", "num": 51, "type": "series", "header": "51: Duke Dumont"}, {"id": "rWL2volt7w8", "title": "FabricLive 52 \u2013 Zero T: precise, deep, and full of variety. #FabricLive52", "date": "2025-10-10", "num": 52, "type": "series", "header": "52: Zero T"}, {"id": "y3Lcb-e-0yc", "title": "FabricLive 53 \u2013 Drop The Lime: rockabilly chaos & rave swagger. #FabricLive53", "date": "2025-10-11", "num": 53, "type": "series", "header": "53: Drop The Lime"}, {"id": "gPXtkz6svLU", "title": "FabricLive 54 \u2013 David Rodigan: reggae legend, dub master. #FabricLive54", "date": "2025-10-12", "num": 54, "type": "series", "header": "54: David Rodigan"}, {"id": "YlrbJN-hXbs", "title": "FabricLive 55 \u2013 DJ Marky: liquid soul & pure rhythm. #dnb #dj", "date": "2025-10-13", "num": 55, "type": "series", "header": "55: DJ Marky"}, {"id": "YqzM84ACKn8", "title": "FabricLive 56 \u2013 Pearson Sound: the birth of modern UK bass. #djculture #electronicmusic #dj", "date": "2025-10-14", "num": 56, "type": "series", "header": "56: Pearson Sound"}, {"id": "J3PhTBps7nw", "title": "FabricLive 57 \u2013 Jackmaster: chaos, energy, and pure fun. #housemusic #djculture #dj", "date": "2025-10-15", "num": 57, "type": "series", "header": "57: Jackmaster"}, {"id": "CN2UWTOo2Ps", "title": "FabricLive 58, Goldie: chaos, class, and drum & bass mastery. #FabricLive58 #dnb #djmix", "date": "2025-10-16", "num": 58, "type": "series", "header": "58: Goldie"}, {"id": "KWre425xx4M", "title": "FabricLive 59, Four Tet, hypnotic, nerdy, for the heads only #FabricLive59 #experimentalmusic #dj", "date": "2025-10-17", "num": 59, "type": "series", "header": "59: Four Tet"}, {"id": "FwYIcq9WxhI", "title": "Brodinski\u2019s FabricLive 60 \u2013 acid, tech, house, all stacked into a party main room mix. #djmix", "date": "2025-10-18", "num": 60, "type": "series", "header": "60: Brodinski"}, {"id": "rVRqUTDHpgU", "title": "Pinch \u2013 FabricLive 61. Sub-bass sorcery. #FabricLive61 #Dubstep #deepmusic", "date": "2025-10-19", "num": 61, "type": "series", "header": "61: Pinch"}, {"id": "805IW39EOEo", "title": "Kasra, dark, minimal, hypnotic. London at 3am. #FabricLive62 #DnB #Kasra #djmix", "date": "2025-10-20", "num": 62, "type": "series", "header": "62: Kasra"}, {"id": "Jl-RvXGseic", "title": "FabricLive 63. Pure chaos from Shy FX, Breakage & B.Traits. #DigitalSoundboy #ukg #djculture", "date": "2025-10-21", "num": 63, "type": "series", "header": "63: Digital Soundboy"}, {"id": "2sE8QmhV7vU", "title": "Oneman\u2019s mix \u2014 pure UKG energy but too many switches, more radio show than journey. #ukgarage #djmix", "date": "2025-10-22", "num": 64, "type": "series", "header": "64: Oneman"}, {"id": "fxd_hhUn32Q", "title": "DJ Hazard \u2013 pure chaos and bass carnage. Certified Weapon. \ud83d\udca5 #djculture #DnB #DJHazard", "date": "2025-10-23", "num": 65, "type": "series", "header": "65: DJ Hazard"}, {"id": "g7_ucwvff00", "title": "Ben Klock - Fabric 66. #techno #dj  #minimaltechno #fabric #london #electronicmusic #nightclub", "date": "2025-08-07", "num": 66, "type": "series", "header": "66: Daniel Avery"}, {"id": "vdoXOrU9ql4", "title": "FabricLive 66 Daniel Avery, electricity with feelings. #Techno #FabricLive66 #DanielAvery", "date": "2025-10-24", "num": 66, "type": "series", "header": "66: Daniel Avery"}, {"id": "BMk0GJP-aac", "title": "Ben UFO FabricLive 67, patient, unpredictable, pure DJ craft. #benufo #fabriclive67 #djmix", "date": "2025-10-25", "num": 67, "type": "series", "header": "67: Ben UFO"}, {"id": "phsCMRurHrI", "title": "FabricLive 68 Calibre, deep liquid soul, rain on concrete vibes. #musicreview #Calibre #DnB", "date": "2025-10-26", "num": 68, "type": "series", "header": "68: Calibre"}, {"id": "_C8FmKH7j9k", "title": "FabricLive 69, Fake Blood, electro chaos still hits hard #FakeBlood #electrohouse #Electro", "date": "2025-10-27", "num": 69, "type": "series", "header": "69: Fake Blood"}, {"id": "uIDJB_V8-lw", "title": "Friction destroys FabricLive 70 with pure DnB power. #FabricLive70 #DJFriction #DnB", "date": "2025-10-28", "num": 70, "type": "series", "header": "70: Friction"}, {"id": "YLqFGoxcCFY", "title": "FabricLive 71 DJ EZ \ud83d\udd0a Garage gold #FabricLive #DJEZ #UKGarage #DJMix #ElectronicMusic", "date": "2025-10-29", "num": 71, "type": "series", "header": "71: DJ EZ"}, {"id": "Ccs-L5Ue6DA", "title": "FabricLive 72 \u2013 Boys Noize. French electro meets acid techno Certified Weapon #BoysNoize #FabricLive", "date": "2025-10-30", "num": 72, "type": "series", "header": "72: Boys Noize"}, {"id": "4ej3ceJ-bac", "title": "Pangaea \u2013 FabricLive 73. Dark, deep, and heavy. #Pangaea #FabricLive73 #HessleAudio", "date": "2025-10-31", "num": 73, "type": "series", "header": "73: Pangaea"}, {"id": "EUeIzpHMOvE", "title": "Jack Beats \u2013 FabricLive 74 | Main Room Material #fabriclive #jackbeats", "date": "2025-11-01", "num": 74, "type": "series", "header": "74: Jack Beats"}, {"id": "xecHcHcNZIU", "title": "Elijah & Skilliam \u2013 FabricLive 75 | Bar Queue Material #fabriclive #grime", "date": "2025-11-02", "num": 75, "type": "series", "header": "75: Elijah & Skilliam"}, {"id": "Gl4EFMRBS5g", "title": "Calyx & TeeBee own FabricLive 76.#fabriclive #drumandbass #dnb #djmix #calyxandteebee", "date": "2025-11-03", "num": 76, "type": "series", "header": "76: Calyx & TeeBee"}, {"id": "0hCcykVXvWg", "title": "Fabriclive 77. Erol Alkan in full control main room vibes #FabricLive77 #ErolAlkan #DJMix #dj", "date": "2025-11-04", "num": 77, "type": "series", "header": "77: Erol Alkan"}, {"id": "krEiR1kJbqk", "title": "FabricLive 78 \u2013 Illum Sphere. Scenic but bumpy. Bucket: Completists Only. #fabriclive #illumSphere", "date": "2025-11-05", "num": 78, "type": "series", "header": "78: Illum Sphere"}, {"id": "lBov0Ae4c4Y", "title": "A hidden gem in the back of fabriclive 80, some 90s drum and bass nostalgia #nostalgia", "date": "2025-11-07", "num": 80, "type": "series", "header": "80: Mumdance"}, {"id": "1tI2gD7KjRI", "title": "Surprising 90s DnB twist at the end of FabricLive 80. #fabriclive80 #mumdance #dnb #techno", "date": "2025-11-07", "num": 80, "type": "series", "header": "80: Mumdance"}, {"id": "rOH84sYsRYc", "title": "FabricLive 81 review: I respect it, but Bar Queue. #djmixreview #fabriclivechallenge", "date": "2025-11-08", "num": 81, "type": "series", "header": "81: Monki"}, {"id": "71-VStEIWFY", "title": "FabricLive 82 goes full techstep pressure. Legends at work. #fabriclive #drumandbass", "date": "2025-11-09", "num": 82, "type": "series", "header": "82: Ed Rush & Optical"}, {"id": "fQ79pSq_uRc", "title": "FabricLive 83 \u2014 Logan Sama. Respect the legacy, but I'm still learning grime. #fabriclive #grime", "date": "2025-11-10", "num": 83, "type": "series", "header": "83: Logan Sama"}, {"id": "n-qsOltOJAo", "title": "Dark, spacious DnB from Dub Phizix. Pure shadow rave energy. #fabriclive #dubphizix #dnb", "date": "2025-11-11", "num": 84, "type": "series", "header": "84: Dub Phizix"}, {"id": "NdY29XMZpIQ", "title": "FabricLive 85 \u2013 Jesse Rose. Pure groove energy. #FabricLive #HouseMusic", "date": "2025-11-13", "num": 85, "type": "series", "header": "85: Jesse Rose"}, {"id": "wD_XHLbDdpA", "title": "Bone-rattling basslines and warehouse warfare. #MyNuLeng #FabricLive #DNB #UKBass #MixReview", "date": "2025-11-13", "num": 86, "type": "series", "header": "86: My Nu Leng"}, {"id": "3-_KNixxXwA", "title": "Groove Armada delivering deep magic in FL87 #groovearmada #fabriclive #house #ukmusic", "date": "2025-11-14", "num": 87, "type": "series", "header": "87: Groove Armada"}, {"id": "vd-GowHCBIY", "title": "Skipped 88 \ud83d\ude02 Flava D brings a wild garage bass workout! #FabricLive #FlavaD #GarageMusic #Bassline", "date": "2025-11-16", "num": 88, "type": "series", "header": "88: Flava D"}, {"id": "ddQ-W_5nLH4", "title": "FabricLive 89 Hannah Wants Deep dark tech house mastery SafeHands #FabricLive #HannahWants", "date": "2025-11-15", "num": 89, "type": "series", "header": "89: Hannah Wants"}, {"id": "1F_8w3Bo9m8", "title": "The darkest depths of grime + system bass. Kahn & Neek deliver. #FabricLive90", "date": "2025-11-17", "num": 90, "type": "series", "header": "90: Kahn & Neek"}, {"id": "OnBL_SmMngE", "title": "Special Request delivers high drama #dnb #bassmusic #electronicmusic", "date": "2025-11-18", "num": 91, "type": "series", "header": "91: Special Request"}, {"id": "-Wiut3Gl7SQ", "title": "FabricLive 92: chaotic garage/bass/grime time-capsule. Fun bits, wild mix. #preditah #garage", "date": "2025-11-19", "num": 92, "type": "series", "header": "92: Preditah"}, {"id": "NSrDxpeKw0U", "title": "Daphni\u2019s FabricLive 93\u2014percussion chaos & joy. #fabriclive93 #daphni #mixreview", "date": "2025-11-20", "num": 93, "type": "series", "header": "93: Daphni"}, {"id": "nbmP98Eq1tw", "title": "Midland, FabricLive94, emotional club journey, timing is everything #fabriclive #midland", "date": "2025-11-21", "num": 94, "type": "series", "header": "94: Midland"}, {"id": "HSE53UeecWU", "title": "Day 95 - Mefjus. Neurofunk madness. Certified Weapon. #fabriclive #mefjus #dnb", "date": "2025-11-22", "num": 95, "type": "series", "header": "95: Mefjus"}, {"id": "SpteynLTZQs", "title": "Skream steps into house & techno mode. FL96 is pure groove. #fabriclive #skream #housemusic", "date": "2025-11-23", "num": 96, "type": "series", "header": "96: Skream"}, {"id": "rNvl7N8-VlU", "title": "Holy Goof \u2013 FabricLive 97. Pure bassline energy. #fabriclive #holygoof #bassline", "date": "2025-11-24", "num": 97, "type": "series", "header": "97: Holy Goof"}, {"id": "XKp7y5VtIeA", "title": "FabricLive 98 by Dimension is a certified weapon. \u26a0\ufe0f\ud83d\udd25 #fabriclive98 #dimension #dnb", "date": "2025-11-25", "num": 98, "type": "series", "header": "98: Dimension"}, {"id": "LTJkM-sr768", "title": "DJ Q FabricLive 99 review, huge garage vibes but not for me #fabriclive #djq #garage", "date": "2025-11-26", "num": 99, "type": "series", "header": "99: DJ Q"}, {"id": "P-XCBLNT56Q", "title": "FabricLive 100 review -  Kode9 & Burial close the series in style #fabriclive100 #burial", "date": "2025-11-27", "num": 100, "type": "series", "header": "100: Kode9 & Burial"}, {"id": "zYFLs4PejNo", "title": "I\u2019ll reveal plans after FabricLive 100. More breakdowns ahead \u2764\ufe0f #fabriclive #musicreview", "date": "2025-11-22", "num": 100, "type": "series", "header": "100: Kode9 & Burial"}, {"id": "1DRgOxru-Nw", "title": "Justice\u2019s rejected FabricLive mix\u2026 too weird for Fabric, perfect for #xmas #justice #fabriclive", "date": "2025-12-01", "num": 999, "type": "series", "header": "Special: Justice"}, {"id": "DupU7JfliNE", "title": "Fabric Live CD Series ranking so far. #top10 #musicreview #fabriclondon #nightclub #djculture #djmix", "date": "2025-08-30", "num": 999, "type": "top10", "header": "Top 10 after 10"}, {"id": "li81t_Y9OY0", "title": "Fabriclive Top 10 after 20 discs. #djculture #electronicmusic #top10 #100dayschallenge #review", "date": "2025-09-10", "num": 100, "type": "top10", "header": "Top 10 after 20"}, {"id": "txIxDMQljj4", "title": "Top 10 so far, FabricLive favourites from the first 30. #top10 #musiccharts #clubculture #2000s", "date": "2025-09-19", "num": 2000, "type": "top10", "header": "Top 10 after 30"}, {"id": "Mih4WUlxJfg", "title": "40 discs in. My top 10 FabricLive mixes so far. Chaos, classics, and curveballs. #FabricLive", "date": "2025-09-28", "num": 999, "type": "top10", "header": "Top 10 after 40"}, {"id": "IwIX7DW4dmQ", "title": "50 FabricLive CDs Later\u2026 Here\u2019s My Top 10 \ud83c\udfc6 #fabriclive #djmix #electronic #drumandbass #breakbeat", "date": "2025-10-11", "num": 999, "type": "top10", "header": "Top 10 after 50"}, {"id": "WgH0ky-gTPw", "title": "Top 10 FabricLive after 60 discs \u2014 countdown from 10. #FabricLive #DJMix #DrumAndBass #top10 #dj", "date": "2025-10-19", "num": 999, "type": "top10", "header": "Top 10 after 60"}, {"id": "nMJZbIT7lvc", "title": "New FabricLive Top 10 after 70 discs \ud83d\udd25 #FabricLive #Top10Mixes #DJMixReview #DanielAvery", "date": "2025-10-29", "num": 999, "type": "top10", "header": "Top 10 after 70"}, {"id": "n72wNXDYJGc", "title": "Top 10 at 80 mixes. This list keeps shifting. #fabriclive #top10", "date": "2025-11-08", "num": 80, "type": "top10", "header": "Top 10 after 80"}, {"id": "z1gcB9Bs1Z8", "title": "Top10 unchanged. Resting up for FabricLive91 review #FabricLive #Top10 #DJMix #UKBass", "date": "2025-11-18", "num": 91, "type": "top10", "header": "Top 10 After 90"}, {"id": "U4kUU20sxS8", "title": "100\u201381 in my FabricLive Top 100. My list, your debate.#fabriclive #djmix #top100", "date": "2025-12-06", "num": 999, "type": "final", "header": "Top 100: 100-81"}, {"id": "5oUKDTmLjlA", "title": "FabricLive Top 100: 80\u201361. The journey continues. #fabriclive #djmixes #top100", "date": "2025-12-06", "num": 80, "type": "final", "header": "Top 100: 80-61"}, {"id": "1QASpoR7gBw", "title": "FabricLive Top100: 61\u201340. Massive section. #fabriclive #djmix #electronicmusic", "date": "2025-12-07", "num": 999, "type": "final", "header": "Top 100: 60-41"}, {"id": "USPkJ6xBLSE", "title": "Part 4: #FabricLive 40\u201321. Pure heat. Drop your picks. #DJMixes #ElectronicMusic", "date": "2025-12-07", "num": 40, "type": "final", "header": "Top 100: 40-21"}, {"id": "hO8wncsx86M", "title": "Final 20. The very best of FabricLive. Let\u2019s finish strong. #fabriclive #djmixes #top100", "date": "2025-12-07", "num": 999, "type": "final", "header": "Top 100: 20-1"}, {"id": "lQAO_CSJZew", "title": "100 days, 100 CDs... lets go! #100dayschallenge #fabric #nightclub #djculture #compilationalbum", "date": "2025-08-19", "num": 100, "type": "final", "header": "TOP MIXES CHALLENGE"}, {"id": "7-rBpbxs3c4", "title": "FabricLive Top 100 complete. What a legacy. \ud83c\udf9b\ud83d\udd25 #fabriclive #djmixes #dancemusic", "date": "2025-12-07", "num": 999, "type": "final", "header": "Top Mixes RANKING"}];
+
+        let currentFilter = 'all';
+        let currentPage = 1;
+        let searchQuery = '';
+        let itemsPerPage = 50;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        function createCard(video) {
+            const card = document.createElement('a');
+            card.href = `https://www.youtube.com/shorts/${video.id}`;
+            card.target = "_blank";
+            card.className = 'video-card group block';
+            
+            card.innerHTML = `
+                <div class="relative aspect-[9/16] bg-white/5 border border-white/10 overflow-hidden mb-4 thumbnail-container">
+                    <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg" 
+                         onerror="this.src='https://img.youtube.com/vi/${video.id}/hqdefault.jpg'"
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         alt="${video.title}">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="text-[9px] font-bold bg-white text-black px-2 py-1 tracking-widest uppercase">${video.header}</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-[11px] font-bold text-white/90 uppercase tracking-tighter leading-tight  group-hover:text-white transition-colors">${video.title}</h3>
+                    <p class="text-[10px] text-white font-medium uppercase tracking-[0.15em]">UPLOADED: ${video.date}</p>
+                </div>
+            `;
+            return card;
+        }
+
+        
+        function updateItemsPerPage(val) {
+            itemsPerPage = val === 'all' ? videoData.length : parseInt(val);
+            currentPage = 1;
+            render();
+        }
+
+        function render() {
+            const grid = document.getElementById('video-grid');
+            grid.innerHTML = '';
+
+            const filtered = videoData.filter(v => {
+                const matchesFilter = currentFilter === 'all' || v.type === currentFilter;
+                const matchesSearch = v.title.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginated = filtered.slice(start, start + itemsPerPage);
+
+            paginated.forEach(video => {
+                const card = createCard(video);
+                grid.appendChild(card);
+                observer.observe(card);
+            });
+
+            document.getElementById('total-count').textContent = `${filtered.length} ENTRIES`;
+            document.getElementById('page-info').textContent = `PAGE ${currentPage} / ${totalPages || 1}`;
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage >= totalPages;
+            document.getElementById('pagination-controls').style.display = totalPages <= 1 ? 'none' : 'flex';
+            lucide.createIcons();
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            currentPage = 1;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${filter}`).classList.add('active');
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPage() { if (currentPage < Math.ceil(videoData.length/itemsPerPage)) { currentPage++; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+        function prevPage() { if (currentPage > 1) { currentPage--; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            currentPage = 1;
+            render();
+        });
+
+        render();
+    </script>
+</body>
+</html>
